@@ -1,0 +1,6 @@
+*~
+*.blend*
+test/
+old/
+TODO.txt
+__pycache__/*
