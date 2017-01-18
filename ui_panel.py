@@ -108,9 +108,22 @@ class POSE_PT_jupm_item(bpy.types.Panel):
 
 		if column.type_ == 'BONE_LAYER':
 			row = layout.row()
+			row.prop(column, "label")
+			row = layout.row()
 			row.prop(column, "bone_layer")
+		elif column.type_ == "BONE_PROP":
 			row = layout.row()
 			row.prop(column, "label")
+			row = layout.row()
+			col = row.column(align=True)
+			row_ = col.row()
+			row_.prop_search(column, "bone_name", armature.data, "bones", text="Bone")
+			col = row.column()
+			row_ = col.row()
+			op = row_.operator("pose.jupm_select_bone", icon="BONE_DATA", text="")
+			op.bone = "bone_property"
+			row = layout.row()
+			row.prop(column, "bone_property")
 
 class POSE_PT_jupm_result(bpy.types.Panel):
 	bl_label = "Result"
@@ -138,6 +151,19 @@ class POSE_PT_jupm_result(bpy.types.Panel):
 					else:
 						text = column.label
 					row.prop(armature.data, 'layers', index=tab[0], toggle=True, text=text)
+
+				elif column.type_ == "BONE_PROP":
+					if column.label == "":
+						text = "Label"
+					else:
+						text = column.label
+					if column.bone_name and column.bone_name in armature.pose.bones:
+						if column.bone_property in [it[0] for it in armature.pose.bones[column.bone_name].items()]:
+							row.prop(armature.pose.bones[column.bone_name], '[\"' + column.bone_property + '\"]', text=text)
+						else:
+							row.label("Error Property")
+					else:
+						row.label("Error Bone")
 
 
 def unregister_class_panels():

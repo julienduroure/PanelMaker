@@ -25,6 +25,7 @@ from .utils import *
 
 jupm_items_column_type = [
 	("BONE_LAYER", "Bone Layer", "", 1),
+	("BONE_PROP", "Bone Property", "", 2),
 	]
 
 class Jupm_column(bpy.types.PropertyGroup):
@@ -36,6 +37,10 @@ class Jupm_column(bpy.types.PropertyGroup):
 
 	### Bone Layer
 	bone_layer = bpy.props.BoolVectorProperty(name="Bone Layer", subtype='LAYER', size = 32)
+
+	### Bone Property
+	bone_name     = bpy.props.StringProperty()
+	bone_property = bpy.props.StringProperty()
 
 
 class Jupm_line(bpy.types.PropertyGroup):

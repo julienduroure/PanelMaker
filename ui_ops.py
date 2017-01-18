@@ -178,6 +178,33 @@ class POSE_OT_jupm_column_remove(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class POSE_OT_jupm_select_bone(bpy.types.Operator):
+    """Select bones"""
+    bl_idname = "pose.jupm_select_bone"
+    bl_label = "Select bone"
+    bl_options = {'REGISTER'}
+
+    bone = bpy.props.StringProperty()
+
+    @classmethod
+    def poll(self, context):
+        armature = context.object
+        return context.active_object and context.active_object.type == "ARMATURE" and len(armature.jupm_lines) > 0 and len(armature.jupm_lines[armature.jupm_line_index].columns) > 0
+
+    def execute(self, context):
+        armature = context.object
+        line = armature.jupm_lines[armature.jupm_line_index]
+        item = line.columns[line.column_index]
+        if context.active_pose_bone:
+            bone_name = context.active_pose_bone.name
+
+        if self.bone == "bone_property":
+            item.bone_name = bone_name
+
+
+        return {'FINISHED'}
+
+
 def register():
     bpy.utils.register_class(POSE_OT_jupm_line_move)
     bpy.utils.register_class(POSE_OT_jupm_line_add)
@@ -185,6 +212,7 @@ def register():
     bpy.utils.register_class(POSE_OT_jupm_column_move)
     bpy.utils.register_class(POSE_OT_jupm_column_add)
     bpy.utils.register_class(POSE_OT_jupm_column_remove)
+    bpy.utils.register_class(POSE_OT_jupm_select_bone)
 
 def unregister():
     bpy.utils.unregister_class(POSE_OT_jupm_line_move)
@@ -193,3 +221,4 @@ def unregister():
     bpy.utils.unregister_class(POSE_OT_jupm_column_move)
     bpy.utils.unregister_class(POSE_OT_jupm_column_add)
     bpy.utils.unregister_class(POSE_OT_jupm_column_remove)
+    bpy.utils.unregister_class(POSE_OT_jupm_select_bone)
