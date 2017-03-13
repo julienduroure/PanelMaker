@@ -28,7 +28,7 @@ bl_info = {
 	"description": "Panle Maker",
 	"location": "View 3D",
 	"wiki_url": "http://blerifa.com/tools/",
-	"tracker_url": "https://github.com/julienduroure/PanelMaker/issues/",
+	"tracker_url": "https://github.com/julienduroure/BleRiFa/issues/",
 	"category": "UI"
 }
 
