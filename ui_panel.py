@@ -117,6 +117,13 @@ class POSE_PT_jupm_item(bpy.types.Panel):
 			row_ = col.row()
 			op = row_.operator("pose.jupm_select_bone_layer", icon="BONE_DATA", text="")
 			op.layer = "bone_layer"
+		elif column.type_ == 'SCENE_LAYER':
+			row = layout.row()
+			row.prop(column, "label")
+			row = layout.row()
+			col = row.column(align=True)
+			row_ = col.row()
+			row_.prop(column, "scene_layer")
 		elif column.type_ == "BONE_PROP":
 			row = layout.row()
 			row.prop(column, "label")
@@ -174,6 +181,14 @@ class POSE_PT_jupm_result(bpy.types.Panel):
 					else:
 						text = column.label
 					row.prop(armature.data, 'layers', index=tab[0], toggle=True, text=text)
+
+				elif column.type_ == "SCENE_LAYER":
+					tab = [i[0] for i in enumerate(column.scene_layer) if i[1] ==  True]
+					if column.label == "":
+						text = "Label"
+					else:
+						text = column.label
+					row.prop(context.scene, 'layers', index=tab[0], toggle=True, text=text)
 
 				elif column.type_ == "BONE_PROP":
 					if column.label == "":
