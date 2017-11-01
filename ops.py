@@ -23,28 +23,72 @@
 import bpy
 from .globs import *
 from .utils import *
+from .ui_texts import *
+import uuid
 
 
-# class POSE_OT_jutp_template(bpy.types.Operator):
-# 	"""Template"""
-# 	bl_idname = "pose.jutp_template"
-# 	bl_label = "Template"
-# 	bl_options = {'REGISTER'}
-#
-# 	# ops parameters here
-#
-# 	@classmethod
-# 	def poll(self, context):
-# 		return True
-#
-# 	def execute(self, context):
-#
-# 		return {'FINISHED'}
+class POSE_OT_jupm_generate(bpy.types.Operator):
+	"""Generate UI"""
+	bl_idname = "pose.jupm_generate"
+	bl_label = "Generate"
+	bl_options = {'REGISTER'}
+
+	# ops parameters here
+
+	@classmethod
+	def poll(self, context):
+		return True #TODO
+
+	def execute(self, context):
+
+		armature = context.object
+
+		#Add rig_id custom prop if not exists, and assign a random value
+		if context.active_object.data.get('PanelMaker_rig_id') is None:
+			bpy.context.active_object.data['PanelMaker_rig_id'] = uuid.uuid4().hex
+		rig_id = context.active_object.data.get('PanelMaker_rig_id')
+
+		ui_generated_text_ = ui_generated_text
+		ui_generated_text_ = ui_generated_text_.replace("###LABEL###", context.active_object.jupm_generation.panel_name)
+		ui_generated_text_ = ui_generated_text_.replace("###REGION_TYPE###", context.active_object.jupm_generation.view_location)
+		ui_generated_text_ = ui_generated_text_.replace("###CATEGORY###", context.active_object.jupm_generation.tab_tool)
+		ui_generated_text_ = ui_generated_text_.replace("###rig_id###", rig_id )
+
+		content = ""
+		for line in armature.jupm_lines:
+			content = content + "\t\t" + "row = layout.row()" + "\n"
+			for column in line.columns:
+				if column.type_ == "BONE_LAYER":
+					tab = [i[0] for i in enumerate(column.bone_layer) if i[1] ==  True]
+					if len(tab) == 0:
+						tab.append(31)
+					if column.label == "":
+						text = "Label"
+					else:
+						text = column.label
+					content = content + "\t\t" + "row.prop(armature.data, 'layers', index=" + str(tab[0]) + ", toggle=True, text='" + text + "')" + "\n"
+				elif column.type_ == "SCENE_LAYER":
+					pass
+				elif column.type_ == "BONE_PROP":
+					pass
+				elif column.type_ == "PROPS":
+					pass
+
+		ui_generated_text_ = ui_generated_text_.replace("###CONTENT###", content)
+
+
+		#Create UI file
+		if context.active_object.data["PanelMaker_rig_id"] + "_PanelMaker_ui.py" in bpy.data.texts.keys():
+			bpy.data.texts.remove(bpy.data.texts[context.active_object.data["PanelMaker_rig_id"] + "_PanelMaker_ui.py"], do_unlink=True)
+		text = bpy.data.texts.new(name=context.active_object.data["PanelMaker_rig_id"] + "_PanelMaker_ui.py")
+		text.use_module = True
+		text.write(ui_generated_text_)
+		exec(text.as_string(), {})
+
+		return {'FINISHED'}
 
 def register():
-	pass
-	# bpy.utils.register_class(POSE_OT_jutp_template)
+	bpy.utils.register_class(POSE_OT_jupm_generate)
 
 def unregister():
-	pass
-	# bpy.utils.unregister_class(POSE_OT_jutp_template)
+	bpy.utils.unregister_class(POSE_OT_jupm_generate)

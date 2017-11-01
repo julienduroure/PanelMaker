@@ -62,6 +62,7 @@ def register():
 
 	bpy.types.Object.jupm_lines = bpy.props.CollectionProperty(type=globs.Jupm_line)
 	bpy.types.Object.jupm_line_index = bpy.props.IntProperty()
+	bpy.types.Object.jupm_generation = bpy.props.PointerProperty(type=globs.Jupm_Generation)
 
 def unregister():
 	# Del Props here

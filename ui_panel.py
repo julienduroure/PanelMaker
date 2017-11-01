@@ -228,22 +228,50 @@ class POSE_PT_jupm_result(bpy.types.Panel):
 							row.label("error prop")
 
 
+class POSE_PT_jupm_PanelMaker(bpy.types.Panel):
+	bl_label = "Generate"
+	bl_space_type = 'VIEW_3D'
+	bl_region_type = 'TOOLS'
+	bl_category = "PanelMaker"
+
+	@classmethod
+	def poll(self, context):
+		armature = context.active_object
+		return armature and armature.type == "ARMATURE" and context.mode == 'POSE'
+
+	def draw(self, context):
+		layout = self.layout
+		armature = context.object
+
+		row = layout.row()
+		row.prop(armature.jupm_generation, "view_location")
+		row = layout.row()
+		row.prop(armature.jupm_generation, "panel_name")
+		if armature.jupm_generation.view_location == "TOOLS":
+			row = layout.row()
+			row.prop(armature.jupm_generation, "tab_tool")
+		row = layout.row()
+		row.operator("pose.jupm_generate", text="Generate")
+
 def unregister_class_panels():
 	bpy.utils.unregister_class(POSE_PT_jupm_line)
 	bpy.utils.unregister_class(POSE_PT_jupm_column)
 	bpy.utils.unregister_class(POSE_PT_jupm_item)
 	bpy.utils.unregister_class(POSE_PT_jupm_result)
+	bpy.utils.unregister_class(POSE_PT_jupm_PanelMaker)
 
 def change_panel_tab():
 	POSE_PT_jupm_line.bl_category = addonpref().category
 	POSE_PT_jupm_column.bl_category = addonpref().category
 	POSE_PT_jupm_item.bl_category = addonpref().category
+	POSE_PT_jupm_PanelMaker.bl_category = addonpref().category
 
 def register_panels():
 	bpy.utils.register_class(POSE_PT_jupm_line)
 	bpy.utils.register_class(POSE_PT_jupm_column)
 	bpy.utils.register_class(POSE_PT_jupm_item)
 	bpy.utils.register_class(POSE_PT_jupm_result)
+	bpy.utils.register_class(POSE_PT_jupm_PanelMaker)
 
 def register():
 

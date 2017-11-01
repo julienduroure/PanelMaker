@@ -89,11 +89,23 @@ class Jupm_line(bpy.types.PropertyGroup):
 	columns = bpy.props.CollectionProperty(type=Jupm_column)
 	column_index = bpy.props.IntProperty()
 
+view_location_items = [
+	("TOOLS", "Tools", "", 1),
+	("UI", "Properties", "", 2),
+]
+
+class Jupm_Generation(bpy.types.PropertyGroup):
+	view_location = bpy.props.EnumProperty(name="View location", items=view_location_items, default="TOOLS")
+	panel_name    = bpy.props.StringProperty(name="Panel name")
+	tab_tool      = bpy.props.StringProperty(name="Tab")
+
 def register():
 	bpy.utils.register_class(Jupm_column)
 	bpy.utils.register_class(Jupm_line)
+	bpy.utils.register_class(Jupm_Generation)
 
 
 def unregister():
 	bpy.utils.unregister_class(Jupm_line)
 	bpy.utils.unregister_class(Jupm_column)
+	bpy.utils.unregister_class(Jupm_Generation)
