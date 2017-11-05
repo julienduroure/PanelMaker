@@ -68,7 +68,14 @@ class POSE_OT_jupm_generate(bpy.types.Operator):
 						text = column.label
 					content = content + "\t\t" + "row.prop(armature.data, 'layers', index=" + str(tab[0]) + ", toggle=True, text='" + text + "')" + "\n"
 				elif column.type_ == "SCENE_LAYER":
-					pass
+					tab = [i[0] for i in enumerate(column.scene_layer) if i[1] ==  True]
+					if len(tab) == 0:
+						tab.append(31)
+					if column.label == "":
+						text = "Label"
+					else:
+						text = column.label
+					content = content + "\t\t" + "row.prop(bpy.context.scene, 'layers', index=" + str(tab[0]) + ", toggle=True, text='" + text + "')" + "\n"
 				elif column.type_ == "BONE_PROP":
 					pass
 				elif column.type_ == "PROPS":
