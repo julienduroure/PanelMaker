@@ -30,7 +30,7 @@ class POSE_OT_jupm_line_move(bpy.types.Operator):
     bl_label = "Move Line"
     bl_options = {'REGISTER'}
 
-    direction = bpy.props.StringProperty()
+    direction: bpy.props.StringProperty()
 
     @classmethod
     def poll(self, context):
@@ -106,7 +106,7 @@ class POSE_OT_jupm_column_move(bpy.types.Operator):
     bl_label = "Move Column"
     bl_options = {'REGISTER'}
 
-    direction = bpy.props.StringProperty()
+    direction: bpy.props.StringProperty()
 
     @classmethod
     def poll(self, context):
@@ -184,7 +184,7 @@ class POSE_OT_jupm_select_bone(bpy.types.Operator):
     bl_label = "Select bone"
     bl_options = {'REGISTER'}
 
-    bone = bpy.props.StringProperty()
+    bone: bpy.props.StringProperty()
 
     @classmethod
     def poll(self, context):
@@ -210,7 +210,7 @@ class POSE_OT_jupm_select_bone_layer(bpy.types.Operator):
     bl_label = "Select bone layer"
     bl_options = {'REGISTER'}
 
-    layer = bpy.props.StringProperty()
+    layer: bpy.props.StringProperty()
 
     @classmethod
     def poll(self, context):

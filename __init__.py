@@ -22,10 +22,10 @@
 ##########################################################################################
 bl_info = {
 	"name": "Panel Maker",
-	"version": (0, 0, 1),
+	"version": (0, 1, 0),
 	"author": "Julien Duroure",
-	"blender": (2, 78, 0),
-	"description": "Panle Maker",
+	"blender": (2, 80, 0),
+	"description": "Panel Maker",
 	"location": "View 3D",
 	"wiki_url": "http://blerifa.com/tools/",
 	"tracker_url": "https://github.com/julienduroure/BleRiFa/issues/",

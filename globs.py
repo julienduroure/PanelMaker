@@ -59,45 +59,39 @@ def prop_subdata_data_item(self, context):
 	return items
 
 class Jupm_column(bpy.types.PropertyGroup):
-	name  = bpy.props.StringProperty()
-	type_ = bpy.props.EnumProperty(items=jupm_items_column_type)
+	name: bpy.props.StringProperty()
+	type_: bpy.props.EnumProperty(items=jupm_items_column_type)
 
 	### Common
-	label = bpy.props.StringProperty()
+	label: bpy.props.StringProperty()
 
 	### Bone Layer
-	bone_layer = bpy.props.BoolVectorProperty(name="Bone Layer", subtype='LAYER', size = 32)
+	bone_layer: bpy.props.BoolVectorProperty(name="Bone Layer", subtype='LAYER', size = 32)
 
 	## Scene Layer
-	scene_layer = bpy.props.BoolVectorProperty(name="Scene Layer", subtype='LAYER', size = 20)
+	scene_layer: bpy.props.BoolVectorProperty(name="Scene Layer", subtype='LAYER', size = 20)
 
 	### Bone Property
-	bone_name     = bpy.props.StringProperty()
-	bone_property = bpy.props.StringProperty()
+	bone_name: bpy.props.StringProperty()
+	bone_property: bpy.props.StringProperty()
 
 	### Props
-	prop_object   = bpy.props.StringProperty()
-	prop_use_data = bpy.props.BoolProperty()
-	prop_use_subdata = bpy.props.BoolProperty()
-	prop_subdata  = bpy.props.EnumProperty(items=prop_subdata_item)
-	prop_subdata_data  = bpy.props.EnumProperty(items=prop_subdata_data_item)
-	prop_datapath = bpy.props.StringProperty()
+	prop_object: bpy.props.StringProperty()
+	prop_use_data: bpy.props.BoolProperty()
+	prop_use_subdata: bpy.props.BoolProperty()
+	prop_subdata: bpy.props.EnumProperty(items=prop_subdata_item)
+	prop_subdata_data: bpy.props.EnumProperty(items=prop_subdata_data_item)
+	prop_datapath: bpy.props.StringProperty()
 
 
 class Jupm_line(bpy.types.PropertyGroup):
-	name    = bpy.props.StringProperty()
-	columns = bpy.props.CollectionProperty(type=Jupm_column)
-	column_index = bpy.props.IntProperty()
-
-view_location_items = [
-	("TOOLS", "Tools", "", 1),
-	("UI", "Properties", "", 2),
-]
+	name: bpy.props.StringProperty()
+	columns: bpy.props.CollectionProperty(type=Jupm_column)
+	column_index: bpy.props.IntProperty()
 
 class Jupm_Generation(bpy.types.PropertyGroup):
-	view_location = bpy.props.EnumProperty(name="View location", items=view_location_items, default="TOOLS")
-	panel_name    = bpy.props.StringProperty(name="Panel name")
-	tab_tool      = bpy.props.StringProperty(name="Tab")
+	panel_name: bpy.props.StringProperty(name="Panel name")
+	tab_tool: bpy.props.StringProperty(name="Tab")
 
 def register():
 	bpy.utils.register_class(Jupm_column)

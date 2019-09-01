@@ -50,7 +50,6 @@ class POSE_OT_jupm_generate(bpy.types.Operator):
 
 		ui_generated_text_ = ui_generated_text
 		ui_generated_text_ = ui_generated_text_.replace("###LABEL###", context.active_object.jupm_generation.panel_name)
-		ui_generated_text_ = ui_generated_text_.replace("###REGION_TYPE###", context.active_object.jupm_generation.view_location)
 		ui_generated_text_ = ui_generated_text_.replace("###CATEGORY###", context.active_object.jupm_generation.tab_tool)
 		ui_generated_text_ = ui_generated_text_.replace("###rig_id###", rig_id )
 

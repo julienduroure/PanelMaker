@@ -29,7 +29,7 @@ from .ui_list import *
 class POSE_PT_jupm_line(bpy.types.Panel):
 	bl_label = "Lines"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
+	bl_region_type = 'UI'
 	bl_category = "PanelMaker"
 
 	@classmethod
@@ -47,8 +47,8 @@ class POSE_PT_jupm_line(bpy.types.Panel):
 
 		col = row.column()
 		row = col.column(align=True)
-		row.operator("pose.jupm_line_add", icon="ZOOMIN", text="")
-		row.operator("pose.jupm_line_remove", icon="ZOOMOUT", text="")
+		row.operator("pose.jupm_line_add", icon="ADD", text="")
+		row.operator("pose.jupm_line_remove", icon="REMOVE", text="")
 		row = col.column(align=True)
 		row.separator()
 		row.operator("pose.jupm_line_move", icon='TRIA_UP', text="").direction = 'UP'
@@ -59,7 +59,7 @@ class POSE_PT_jupm_line(bpy.types.Panel):
 class POSE_PT_jupm_column(bpy.types.Panel):
 	bl_label = "Columns"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
+	bl_region_type = 'UI'
 	bl_category = "PanelMaker"
 
 	@classmethod
@@ -77,8 +77,8 @@ class POSE_PT_jupm_column(bpy.types.Panel):
 
 		col = row.column()
 		row = col.column(align=True)
-		row.operator("pose.jupm_column_add", icon="ZOOMIN", text="")
-		row.operator("pose.jupm_column_remove", icon="ZOOMOUT", text="")
+		row.operator("pose.jupm_column_add", icon="ADD", text="")
+		row.operator("pose.jupm_column_remove", icon="REMOVE", text="")
 		row = col.column(align=True)
 		row.separator()
 		row.operator("pose.jupm_column_move", icon='TRIA_UP', text="").direction = 'UP'
@@ -89,7 +89,7 @@ class POSE_PT_jupm_column(bpy.types.Panel):
 class POSE_PT_jupm_item(bpy.types.Panel):
 	bl_label = "Item"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
+	bl_region_type = 'UI'
 	bl_category = "PanelMaker"
 
 	@classmethod
@@ -158,7 +158,7 @@ class POSE_PT_jupm_item(bpy.types.Panel):
 class POSE_PT_jupm_result(bpy.types.Panel):
 	bl_label = "Result"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
+	bl_region_type = 'UI'
 	bl_category = "PanelMaker"
 
 	@classmethod
@@ -199,16 +199,16 @@ class POSE_PT_jupm_result(bpy.types.Panel):
 						if column.bone_property in [it[0] for it in armature.pose.bones[column.bone_name].items()]:
 							row.prop(armature.pose.bones[column.bone_name], '[\"' + column.bone_property + '\"]', text=text)
 						else:
-							row.label("Error Property")
+							row.label(text="Error Property")
 					else:
-						row.label("Error Bone")
+						row.label(text="Error Bone")
 				elif column.type_ == "PROPS":
 					if column.label == "":
 						text = "Label"
 					else:
 						text = column.label
 					if column.prop_object not in bpy.data.objects:
-						row.label("Error object")
+						row.label(text="Error object")
 					else:
 						try:
 							str_data = ""
@@ -225,13 +225,13 @@ class POSE_PT_jupm_result(bpy.types.Panel):
 							else:
 								row.prop(eval("bpy.data.objects['" + column.prop_object + "']" + str_data + str_subdata), column.prop_datapath, text=text)
 						except:
-							row.label("error prop")
+							row.label(text="error prop")
 
 
 class POSE_PT_jupm_PanelMaker(bpy.types.Panel):
 	bl_label = "Generate"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
+	bl_region_type = 'UI'
 	bl_category = "PanelMaker"
 
 	@classmethod
@@ -244,12 +244,9 @@ class POSE_PT_jupm_PanelMaker(bpy.types.Panel):
 		armature = context.object
 
 		row = layout.row()
-		row.prop(armature.jupm_generation, "view_location")
-		row = layout.row()
 		row.prop(armature.jupm_generation, "panel_name")
-		if armature.jupm_generation.view_location == "TOOLS":
-			row = layout.row()
-			row.prop(armature.jupm_generation, "tab_tool")
+		row = layout.row()
+		row.prop(armature.jupm_generation, "tab_tool")
 		row = layout.row()
 		row.operator("pose.jupm_generate", text="Generate")
 

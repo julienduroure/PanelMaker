@@ -27,10 +27,10 @@ class jutp_AddonPreferences(bpy.types.AddonPreferences):
 	bl_idname = __package__
 
 
-	category = bpy.props.StringProperty(name="Category", default="PanelMaker", update=update_panel_cb)
+	category: bpy.props.StringProperty(name="Category", default="PanelMaker", update=update_panel_cb)
 
 	def draw(self, context):
-		pass
+		self.layout.row().prop(self, "category")
 
 
 def register():

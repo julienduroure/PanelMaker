@@ -37,7 +37,7 @@ PanelMaker_rig_id = "###rig_id###"
 class POSE_PT_JuAR_PanelMaker_###rig_id###(bpy.types.Panel):
 	bl_label = "###LABEL###"
 	bl_space_type = 'VIEW_3D'
-	bl_region_type = '###REGION_TYPE###'
+	bl_region_type = 'UI'
 	bl_category = "###CATEGORY###"
 
 	@classmethod

@@ -25,8 +25,8 @@ from .globs import *
 
 #shortcut to prefs
 def addonpref():
-	user_preferences = bpy.context.user_preferences
-	return user_preferences.addons[__package__].preferences
+	preferences = bpy.context.preferences
+	return preferences.addons[__package__].preferences
 
 from .ui_panel import *
 def update_panel():
